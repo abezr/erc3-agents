@@ -1,24 +1,66 @@
-Sample agents for the ERC3: AI Agents in action competition.
+# ERC3 Sample Agents
 
+Sample agents demonstrating how to participate in the ERC3: AI Agents in Action competition.
 
-Make sure to get your ERC3_API_KEY by going to [https://erc.timetoact-group.at/](https://erc.timetoact-group.at/) and entering email with which you've registered ([register here](https://www.timetoact-group.at/events/enterprise-rag-challenge-part-3) and wait 24 hours).
+## Getting Started
 
+### 1. Get Your API Key
 
+To use these agents, you'll need an ERC3 API key:
 
-All agents require ERC3 SDK and `ERC3_API_KEY` to connect to the platform and get benchmark. They might also need an `OPENAI_API_KEY` or equivalent.
+1. Visit https://erc.timetoact-group.at/
+2. Enter the email address you used during registration
+3. Your API key will be displayed
 
+Note: If you haven't registered yet, https://www.timetoact-group.at/events/enterprise-rag-challenge-part-3 and allow 24 hours for your
+registration to be processed.
 
-Here is how you can run sgr-agent-store (simple agent solving `store` benchmark) on your machine:
+### 2. Prerequisites
+
+All agents require:
+- ERC3 SDK - for connecting to the platform and accessing benchmarks
+- ERC3_API_KEY - your competition API key
+- LLM API Key - such as OPENAI_API_KEY or equivalent (depending on the agent)
+
+## Running an Agent
+
+Here's an example of running the sgr-agent-store (a simple agent that solves the store benchmark):
 
 ```
-export OPENAI_API_KEY=...
-export ERC3_API_KEY=key-.....
+# Set up your environment variables
+export OPENAI_API_KEY=sk-...
+export ERC3_API_KEY=key-...
+
+# Navigate to the agent directory
 cd sgr-agent-store
-# activate your virtual environment
+
+# Activate your virtual environment (optional but recommended)
+# python3 -m venv venv
+# source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Run the agent
 python3 main.py
 ```
 
+this should look like this:
+
+![res/console.png](res/console.png)
 
 
+
+# Available Agents
+
+- sgr-agent-store - A simple agent implementation for the store benchmark
+
+# Resources
+
+- https://www.timetoact-group.at/events/enterprise-rag-challenge-part-3
+- https://erc.timetoact-group.at/
+
+# Support
+
+You can ask questions in the discord channel (you get a link to that with the registration email)
 
