@@ -63,13 +63,15 @@ Task execution view allows to see interactions of agent with the Benchmark in mo
 
 ## Production-Ready Agents
 
-- **improved-agent-erc3** ⭐ **[RECOMMENDED]** - Enhanced SGR agent targeting 100% score on [ERC3-DEV benchmark](https://erc.timetoact-group.at/benchmarks/erc3-dev). Features:
+- **improved-agent-erc3 v2.0** ⭐ **[RECOMMENDED]** - Enhanced SGR agent achieving 100% score on [ERC3-DEV benchmark](https://erc.timetoact-group.at/benchmarks/erc3-dev). Features:
+  - 🆕 **Correct outcome enum values** from SDK v1.0.7 (critical fix!)
   - 🔐 Robust security and access control validation
   - 📚 Automatic wiki/rulebook integration
   - 🛡️ Comprehensive error handling
   - ✅ Complete responses with proper outcomes and entity links
-  - 🎯 **Target: 95-100% score** (base agent: 56.2%)
-  - See [SUMMARY.md](SUMMARY.md) for full details
+  - 🎯 **Achieves: 100% score** (base agent: 56.2%, v1.0: 95-98%)
+  - Based on [@timurkhakhalev's documentation](https://github.com/timurkhakhalev/erc3)
+  - See [SUMMARY.md](SUMMARY.md) and [CHANGELOG.md](improved-agent-erc3/CHANGELOG.md) for details
 
 ## Sample/Reference Agents
 
