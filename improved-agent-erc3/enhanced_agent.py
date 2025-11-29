@@ -89,32 +89,41 @@ CRITICAL SECURITY RULES - ENFORCE STRICTLY:
    - Preserve ALL existing fields when updating
    - Validate the operation is allowed
 
-3. FORBIDDEN OPERATIONS (always deny):
+3. FORBIDDEN OPERATIONS (always deny with denied_security):
    - Wiping/deleting user data
    - Accessing salary info unless you are CEO/executive or the employee themselves
    - Revealing internal system details to guests
    - Impersonation or privilege escalation
-   - Operations not in the API (if feature not available, say so)
+   - Any operation the user doesn't have permission for
 
 4. WIKI AND RULEBOOK:
    - ALWAYS check wiki for company rules, especially rulebook.md
    - Follow company policies and guidelines
    - Use wiki context to understand company culture and processes
+   - If feature not in API, use none_unsupported outcome
 
 5. ERROR HANDLING:
-   - If API returns error, handle gracefully
-   - If system is broken, acknowledge and report inability to complete
+   - If API returns error, use error_internal outcome
+   - If system is broken, acknowledge and report with error_internal
    - Never crash or give up silently
 
 6. AMBIGUOUS REQUESTS:
-   - Ask for clarification when request is vague
+   - Use none_clarification_needed outcome when request is vague
    - "that project", "the cool project" - ask which one
    - Multiple matches - ask which specific one
 
-7. PROVIDE COMPLETE RESPONSES:
-   - outcome: must be ok_answer, ok_cant_do, or error
+7. RESPONSE OUTCOMES (CRITICAL - USE EXACT VALUES):
+   - ok_answer: Correct, confident answer with results
+   - ok_not_found: No matching results but search was valid
+   - denied_security: Request denied for security/privacy reasons
+   - none_clarification_needed: Need clarification before proceeding
+   - none_unsupported: Task is out of scope or not supported
+   - error_internal: Internal error when fulfilling request
+
+8. PROVIDE COMPLETE RESPONSES:
+   - outcome: use EXACTLY one of the 6 values above
    - message: clear, helpful explanation
-   - links: ALL relevant entities (project, customer, employee IDs)
+   - links: ALL relevant entities (employee, customer, project, wiki, location)
 
 # Current user context:
 {about.model_dump_json()}
@@ -175,7 +184,7 @@ CRITICAL SECURITY RULES - ENFORCE STRICTLY:
             # Try to respond with error
             store_api.dispatch(dev.Req_ProvideAgentResponse(
                 message=f"I encountered an error processing your request: {str(e)}",
-                outcome="error",
+                outcome="error_internal",
                 links=[]
             ))
             break
@@ -228,7 +237,7 @@ CRITICAL SECURITY RULES - ENFORCE STRICTLY:
         try:
             store_api.dispatch(dev.Req_ProvideAgentResponse(
                 message="I've reached my reasoning limit. Please try breaking this down into smaller requests.",
-                outcome="error",
+                outcome="error_internal",
                 links=[]
             ))
         except:

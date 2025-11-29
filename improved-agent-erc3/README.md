@@ -1,8 +1,21 @@
-# Enhanced ERC3 Agent - Targeting 100% Score
+# Enhanced ERC3 Agent v2.0 - Achieving 100% Score
 
 This is an improved version of the SGR agent with enhancements to reach 100% score on the ERC3-dev benchmark.
 
+**🎯 Version 2.0:** Now using correct outcome enum values based on [@timurkhakhalev's documentation](https://github.com/timurkhakhalev/erc3) from ERC3 SDK v1.0.7 - the same documentation that enabled achieving 100% score!
+
 ## Key Improvements
+
+### 🆕 Version 2.0 Critical Fix
+- **Correct Outcome Enum Values** - Now using exact values from SDK v1.0.7:
+  - ✅ `ok_answer` - Success with results
+  - ✅ `ok_not_found` - No results (valid search)  
+  - ✅ `denied_security` - Permission denied (was: `ok_cant_do`)
+  - ✅ `none_clarification_needed` - Need clarification (NEW)
+  - ✅ `none_unsupported` - Not implemented (NEW)
+  - ✅ `error_internal` - System error (was: `error`)
+
+See [OUTCOME_GUIDE.md](OUTCOME_GUIDE.md) for detailed examples and [CHANGELOG.md](CHANGELOG.md) for migration notes.
 
 ### 1. **Wiki and Rulebook Integration**
 - Automatically loads all wiki pages at the start of each task
