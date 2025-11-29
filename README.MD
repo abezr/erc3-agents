@@ -61,8 +61,20 @@ Task execution view allows to see interactions of agent with the Benchmark in mo
 
 # Available Agents
 
+## Production-Ready Agents
+
+- **improved-agent-erc3** ⭐ **[RECOMMENDED]** - Enhanced SGR agent targeting 100% score on [ERC3-DEV benchmark](https://erc.timetoact-group.at/benchmarks/erc3-dev). Features:
+  - 🔐 Robust security and access control validation
+  - 📚 Automatic wiki/rulebook integration
+  - 🛡️ Comprehensive error handling
+  - ✅ Complete responses with proper outcomes and entity links
+  - 🎯 **Target: 95-100% score** (base agent: 56.2%)
+  - See [SUMMARY.md](SUMMARY.md) for full details
+
+## Sample/Reference Agents
+
 - sgr-agent-store - A simple agent implementation for [STORE benchmark](https://erc.timetoact-group.at/benchmarks/store). It relies on [Schema-Guided Reasoning](https://abdullin.com/schema-guided-reasoning/) to provide adaptive thinking capabilities with a single recursive prompt and gpt-4o.
-- sgr-agent-erc3 - A simple [SGR](https://abdullin.com/schema-guided-reasoning/) NextStep agent for [ERC3-DEV benchmark](https://erc.timetoact-group.at/benchmarks/erc3-dev).
+- sgr-agent-erc32 - A simple [SGR](https://abdullin.com/schema-guided-reasoning/) NextStep agent for [ERC3-DEV benchmark](https://erc.timetoact-group.at/benchmarks/erc3-dev). Scores 56.2% (reference implementation).
 
 # Resources
 
