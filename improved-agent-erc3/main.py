@@ -1,18 +1,44 @@
+import os
 import textwrap
-from openai import OpenAI
 from enhanced_agent import run_agent
 from erc3 import ERC3
 
-client = OpenAI()
+# Configuration
+# LLM Provider: "auto" (detect from env), "openai", or "google"
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "auto")
+
+# Model selection based on provider
+# OpenAI: "gpt-4o", "gpt-4o-mini", "gpt-4-turbo"
+# Google: "gemini-2.0-flash-exp", "gemini-1.5-pro", "gemini-1.5-flash"
+MODEL_ID = os.getenv("MODEL_ID", None)  # None = use default for provider
+
+# Auto-select model based on provider if not specified
+if MODEL_ID is None:
+    has_openai = bool(os.getenv("OPENAI_API_KEY"))
+    has_google = bool(os.getenv("GOOGLE_API_KEY"))
+    
+    if LLM_PROVIDER == "google" or (LLM_PROVIDER == "auto" and has_google and not has_openai):
+        MODEL_ID = "gemini-2.0-flash-exp"
+        effective_provider = "google"
+    else:
+        MODEL_ID = "gpt-4o"
+        effective_provider = "openai"
+else:
+    effective_provider = LLM_PROVIDER
+
+print(f"🤖 LLM Configuration:")
+print(f"   Provider: {effective_provider}")
+print(f"   Model: {MODEL_ID}")
+print()
+
 core = ERC3()
-MODEL_ID = "gpt-4o"
 
 # Start session with metadata
 res = core.start_session(
     benchmark="erc3-dev",
     workspace="my",
-    name=f"Enhanced SGR Agent v2 ({MODEL_ID}) - Wiki + Security",
-    architecture="Enhanced NextStep SGR with Wiki integration, robust security checks, and error handling")
+    name=f"Enhanced SGR Agent v2.1 ({MODEL_ID}) - Multi-LLM",
+    architecture=f"Enhanced NextStep SGR with {effective_provider.upper()} ({MODEL_ID}), Wiki integration, security checks")
 
 status = core.session_status(res.session_id)
 print(f"\n{'='*60}")
@@ -31,7 +57,7 @@ for idx, task in enumerate(status.tasks, 1):
     core.start_task(task)
     
     try:
-        run_agent(MODEL_ID, core, task)
+        run_agent(MODEL_ID, core, task, llm_provider=LLM_PROVIDER)
     except Exception as e:
         print(f"\n❌ EXCEPTION: {e}")
         import traceback

@@ -1,10 +1,19 @@
-# Enhanced ERC3 Agent v2.0 - Achieving 100% Score
+# Enhanced ERC3 Agent v2.1 - Achieving 100% Score
 
 This is an improved version of the SGR agent with enhancements to reach 100% score on the ERC3-dev benchmark.
 
-**🎯 Version 2.0:** Now using correct outcome enum values based on [@timurkhakhalev's documentation](https://github.com/timurkhakhalev/erc3) from ERC3 SDK v1.0.7 - the same documentation that enabled achieving 100% score!
+**🎯 Version 2.1:** Multi-LLM support! Now works with **Google Gemini** (free!) OR **OpenAI** (gpt-4o)
+
+**🎯 Version 2.0:** Using correct outcome enum values based on [@timurkhakhalev's documentation](https://github.com/timurkhakhalev/erc3) from ERC3 SDK v1.0.7 - the same documentation that enabled achieving 100% score!
 
 ## Key Improvements
+
+### 🆕 Version 2.1 - Multi-LLM Support
+- **Google Gemini Support** - Use free Gemini 2.0 Flash or Gemini 1.5 Pro!
+- **OpenAI Support** - Continue using GPT-4o, GPT-4o-mini, etc.
+- **Auto-Detection** - Automatically detects which API key you have
+- **Unified Interface** - Same code works with both providers
+- See [MULTI_LLM_GUIDE.md](MULTI_LLM_GUIDE.md) for details
 
 ### 🆕 Version 2.0 Critical Fix
 - **Correct Outcome Enum Values** - Now using exact values from SDK v1.0.7:
@@ -67,14 +76,41 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Option A: Google Gemini (Free! Recommended)
+
+```bash
+# Get free API key at https://aistudio.google.com/app/apikey
+export GOOGLE_API_KEY=your-google-api-key
+export ERC3_API_KEY=your-erc3-key
+
+# Run the agent (auto-detects Gemini)
+python3 main.py
+```
+
+### Option B: OpenAI
+
 ```bash
 # Set environment variables
 export OPENAI_API_KEY=your-openai-key
 export ERC3_API_KEY=your-erc3-key
 
-# Run the agent
+# Run the agent (auto-detects OpenAI)
 python3 main.py
 ```
+
+### Advanced: Explicit Provider & Model Selection
+
+```bash
+# Force specific provider and model
+export LLM_PROVIDER=google  # or "openai"
+export MODEL_ID=gemini-1.5-pro  # or "gpt-4o-mini"
+export GOOGLE_API_KEY=your-key
+export ERC3_API_KEY=your-key
+
+python3 main.py
+```
+
+See [MULTI_LLM_GUIDE.md](MULTI_LLM_GUIDE.md) for complete configuration options.
 
 ## Architecture
 

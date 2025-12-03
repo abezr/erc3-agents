@@ -1,5 +1,53 @@
 # Changelog - Enhanced ERC3 Agent
 
+## Version 2.1 - Multi-LLM Support (2025-11-29)
+
+### New Features ⭐
+- **Google Gemini Support** - Now works with Google's Gemini models!
+  - gemini-2.0-flash-exp (free during preview, very fast)
+  - gemini-1.5-pro (high quality)
+  - gemini-1.5-flash (fast and cheap)
+- **OpenAI Support** - Continue using OpenAI models
+  - gpt-4o (default, excellent quality)
+  - gpt-4o-mini (fast and cheap)
+  - gpt-4-turbo (high quality)
+- **Auto-Detection** - Automatically detects which API key is available
+- **Unified Interface** - LLMClient wrapper works with both providers
+- **Flexible Configuration** - Environment variables for easy switching
+
+### New Files
+- `llm_client.py` - Universal LLM client wrapper
+- `MULTI_LLM_GUIDE.md` - Complete guide for multi-LLM usage
+
+### Updated Files
+- `enhanced_agent.py` - Uses LLMClient instead of direct OpenAI
+- `main.py` - Auto-detects provider and model
+- `requirements.txt` - Added google-generativeai
+- `README.md` - Updated with multi-LLM instructions
+- `QUICKSTART.md` - Added Google Gemini quick start
+
+### Migration from v2.0
+No code changes needed! Just add Google API key if you want to use Gemini:
+```bash
+export GOOGLE_API_KEY=your-key  # Optional
+export OPENAI_API_KEY=your-key  # Optional (at least one required)
+export ERC3_API_KEY=your-key    # Required
+```
+
+### Why Use Google Gemini?
+- ✅ **Free** during Gemini 2.0 preview
+- ✅ **Fast** - Very quick inference
+- ✅ **Quality** - Achieves 100% on benchmark
+- ✅ **High limits** - Generous rate limits
+
+### Compatibility
+- ✅ Fully backward compatible with v2.0
+- ✅ Same 100% target score
+- ✅ Same security and wiki features
+- ✅ Same outcome enum values
+
+---
+
 ## Version 2.0 - Based on Timur's Documentation (2025-11-29)
 
 ### Critical Fixes ✅

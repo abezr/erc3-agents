@@ -5,7 +5,9 @@ Get up and running in 5 minutes! 🚀
 ## Prerequisites
 
 ✅ Python 3.8+
-✅ OpenAI API Key ([Get one here](https://platform.openai.com/api-keys))
+✅ **LLM API Key:** Choose one:
+  - OpenAI API Key ([Get here](https://platform.openai.com/api-keys)) - Paid
+  - Google API Key ([Get here](https://aistudio.google.com/app/apikey)) - Free tier! ⭐
 ✅ ERC3 API Key ([Get one here](https://erc.timetoact-group.at/))
 
 ## Installation (60 seconds)
@@ -20,10 +22,18 @@ pip install -r requirements.txt
 
 ## Configuration (30 seconds)
 
+### Option A: Google Gemini (Free! ⭐ Recommended)
 ```bash
-# Set your API keys
+export GOOGLE_API_KEY=your-google-api-key-here
+export ERC3_API_KEY=your-erc3-api-key-here
+# Agent will auto-detect and use Gemini
+```
+
+### Option B: OpenAI
+```bash
 export OPENAI_API_KEY=your-openai-api-key-here
 export ERC3_API_KEY=your-erc3-api-key-here
+# Agent will auto-detect and use GPT-4o
 ```
 
 ## Run (3 minutes)
@@ -63,6 +73,7 @@ Message: I cannot help with that request...
 
 This agent vs the base SGR agent (56.2%):
 
+✅ **Works with Google Gemini OR OpenAI** - Choose your LLM! 🆕
 ✅ **Reads the rulebook** - Knows company policies
 ✅ **Validates security** - Checks permissions before actions
 ✅ **Handles errors** - Doesn't crash on broken systems
@@ -74,8 +85,10 @@ This agent vs the base SGR agent (56.2%):
 **Problem:** "API key not found"
 ```bash
 # Check if keys are set
-echo $OPENAI_API_KEY
+echo $OPENAI_API_KEY  # OR
+echo $GOOGLE_API_KEY
 echo $ERC3_API_KEY
+# Set at least one LLM key + ERC3 key
 ```
 
 **Problem:** Score < 95
@@ -95,6 +108,7 @@ echo $ERC3_API_KEY
 - This agent is ready!
 
 📚 **Learn More:**
+- [MULTI_LLM_GUIDE.md](MULTI_LLM_GUIDE.md) - **Multi-LLM setup guide** 🆕
 - [README.md](README.md) - Full overview
 - [IMPROVEMENTS.md](IMPROVEMENTS.md) - Technical deep dive
 - [TESTING.md](TESTING.md) - Comprehensive testing guide

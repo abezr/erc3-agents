@@ -3,9 +3,7 @@ from typing import Annotated, List, Union, Literal, Optional
 from annotated_types import MaxLen, MinLen
 from pydantic import BaseModel, Field
 from erc3 import erc3 as dev, ApiException, TaskInfo, ERC3
-from openai import OpenAI
-
-client = OpenAI()
+from llm_client import LLMClient
 
 class NextStep(BaseModel):
     thoughts: str = Field(..., description="Your detailed reasoning about the current situation")
@@ -46,8 +44,19 @@ CLI_BLUE = "\x1B[34m"
 CLI_YELLOW = "\x1B[33m"
 CLI_CLR = "\x1B[0m"
 
-def run_agent(model: str, api: ERC3, task: TaskInfo):
-    """Enhanced agent with Wiki support, better security, and error handling"""
+def run_agent(model: str, api: ERC3, task: TaskInfo, llm_provider: str = "auto"):
+    """Enhanced agent with Wiki support, better security, and error handling
+    
+    Args:
+        model: Model name (e.g., "gpt-4o", "gemini-2.0-flash-exp")
+        api: ERC3 API instance
+        task: Task information
+        llm_provider: "openai", "google", or "auto" (default: auto-detect)
+    """
+    
+    # Initialize LLM client
+    llm_client = LLMClient(provider=llm_provider, model=model)
+    print(f"{CLI_BLUE}Using LLM: {llm_client.get_provider_name()} / {llm_client.get_model_name()}{CLI_CLR}")
     
     store_api = api.get_erc_dev_client(task)
     about = store_api.who_am_i()
@@ -157,21 +166,22 @@ CRITICAL SECURITY RULES - ENFORCE STRICTLY:
         started = time.time()
 
         try:
-            completion = client.beta.chat.completions.parse(
-                model=model,
-                response_format=NextStep,
+            # Use universal LLM client
+            job, usage = llm_client.parse_completion(
                 messages=log,
-                max_completion_tokens=16384,
+                response_format=NextStep,
+                max_tokens=16384,
             )
+            
+            duration = time.time() - started
 
+            # Log to ERC3 platform
             api.log_llm(
                 task_id=task.task_id,
-                model=model,
-                duration_sec=time.time() - started,
-                usage=completion.usage,
+                model=llm_client.get_model_name(),
+                duration_sec=duration,
+                usage=type('Usage', (), usage)(),  # Convert dict to object
             )
-
-            job = completion.choices[0].message.parsed
 
             # Print reasoning
             print(f"{CLI_YELLOW}Thoughts:{CLI_CLR} {job.thoughts[:150]}...")
